@@ -35,7 +35,11 @@ jobs:
         with:
           ref: ${{github.event.inputs.branch}}
           fetch-depth: 0
+      - name: testing
+        run: |
+          echo $GITHUB_SHA
       - uses: rickstaa/action-create-tag@v1
         with:
           tag: ${{github.event.inputs.tagId}}
           commit_sha: ${{github.event.inputs.commit}}
+          
