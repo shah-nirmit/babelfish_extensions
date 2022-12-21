@@ -13,9 +13,7 @@ on:
         description: 'tag to create'
         # Input has to be provided for the workflow to run
         required: true
-      commit_hash:
-        description: 'commit on which tag to create'
-        required: false
+
         
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -32,7 +30,6 @@ jobs:
       - uses: rickstaa/action-create-tag@v1
         with:
           tag: tagId
-          commit_sha: commit_hash
           
         
 
