@@ -13,7 +13,10 @@ on:
         description: 'tag to create'
         # Input has to be provided for the workflow to run
         required: true
-
+      branch:
+        default: 'BABEL_2_X_DEV'
+        required: true
+        description: 'branch where to create the tag'
         
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -27,6 +30,8 @@ jobs:
     steps:
     # Runs a single command using the runners shell
       - uses: actions/checkout@v3
+        with:
+          ref: ${{github.event.inputs.branch}}
       - uses: rickstaa/action-create-tag@v1
         with:
           tag: ${{github.event.inputs.tagId}}
