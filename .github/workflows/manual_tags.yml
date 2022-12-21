@@ -28,3 +28,5 @@ jobs:
     # Runs a single command using the runners shell
       - uses: actions/checkout@v3
       - uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{github.event.inputs.tagId}}
