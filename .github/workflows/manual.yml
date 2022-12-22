@@ -40,7 +40,7 @@ jobs:
           run: |
             git remote add upstream ${{ env.EXT_BRANCH_URL }}
             git fetch upstream
-            git checkout -b bump-version-${{ github.event.inputs.target_branch}} upstream/${{ github.event.inputs.target_branch}}
+            git checkout -b bump-me  upstream/${{ github.event.inputs.target_branch}}
             git status
             git branch -vv
         - name: Identify the version to bump
@@ -63,6 +63,7 @@ jobs:
             sed -i -r 's/(.*)(BABELFISH_VERSION_STR )"([0-9]+.[0-9]+.)([0-9]+)"/echo "\1\2\\"\3$((\4+1))\\""/ge' ${{ env.vfile }}
             git add .
             git commit -m "Bump Babelfish Version to ${{ env.bbf_new_version }}" -s
+            git checkout -b  bump-ver-${{ github.event.inputs.target_branch}}
             git push origin bump-ver-${{ github.event.inputs.target_branch}}
 
         - name: Raise a PR
