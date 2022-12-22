@@ -63,7 +63,7 @@ jobs:
             sed -i -r 's/(.*)(BABELFISH_VERSION_STR )"([0-9]+.[0-9]+.)([0-9]+)"/echo "\1\2\\"\3$((\4+1))\\""/ge' ${{ env.vfile }}
             git add .
             git commit -m "Bump Babelfish Version to ${{ env.bbf_new_version }}" -s
-            git push -u origin bump-ver-${{ github.event.inputs.target_branch}}
+            git push origin bump-ver-${{ github.event.inputs.target_branch}}
 
         - name: Raise a PR
           run: |
