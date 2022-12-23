@@ -46,29 +46,10 @@ then
     exit 1
 fi
 
-# get repo name from git
-# remote=$(git config --get remote.origin.url)
-# repo=$(basename $remote.git)
-
-# Set up remote url for checkout@v1 action.
-
-# echo ${remote}
-# echo ${repo}
-
-# git remote set-url origin "${repo}"
 git remote -vv
 git branch -vv
 
-echo Creating tag $new for commit $commit
-echo $message
+echo Creating tag $new for commit $commit $message
+
 git tag -a "${new}" -m "${message}" $commit
 git push origin "${new}"
-# POST a new ref to repo via Github API
-#curl -s -X POST https://api.github.com/repos/$REPO_OWNER/$repo/git/refs \
-#-H "Authorization: token $GITHUB_TOKEN" \
-#-d @- << EOF
-#{
-#  "ref": "refs/tags/$new",
-#  "sha": "$commit"
-#}
-#EOF
