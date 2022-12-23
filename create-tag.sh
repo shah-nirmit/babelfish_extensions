@@ -58,7 +58,7 @@ git remote -vv
 git branch -vv
 
 echo Creating tag $new for commit $commit
-git tag -a "${new}" -m ${message}
+git tag -a "${new}" -m ${message} $commit
 git push origin "${new}"
 # POST a new ref to repo via Github API
 #curl -s -X POST https://api.github.com/repos/$REPO_OWNER/$repo/git/refs \
