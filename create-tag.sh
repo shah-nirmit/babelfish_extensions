@@ -9,16 +9,18 @@ git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 export usage="$(basename "$0") [-h] [-c commit] [-r repo][-m]\n
   -h    help\n
   -c    commit hash; Default commit:HEAD\n
-  -t    tag name"
+  -t    tag name
+  -m    message"
 
 
-while getopts hc:t: flag
+while getopts hc:t:m flag
 do
     case "${flag}" in
         h) echo -e "Usage: $usage"
             exit;;
         c) commit=${OPTARG};;
         t) new=${OPTARG};;
+        m) message=${OPTARG};;
     esac
 done
 
@@ -59,7 +61,7 @@ git branch -vv
 
 echo Creating tag $new for commit $commit
 echo ${message}
-git tag -a "${new}" -m ${message} $commit
+git tag -a "${new}" -m "${message}" $commit
 git push origin "${new}"
 # POST a new ref to repo via Github API
 #curl -s -X POST https://api.github.com/repos/$REPO_OWNER/$repo/git/refs \

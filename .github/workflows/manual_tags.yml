@@ -16,7 +16,7 @@ on:
       message:
         required: true
       commit_hash:
-        required: false
+        required: true
 #       branch:
 #         default: 'BABEL_2_X_DEV'
 #         required: true
@@ -44,16 +44,16 @@ jobs:
         if: ${{github.event.inputs.commit_hash == ''}} 
         run: |
             chmod +x ./create-tag.sh
-            export message=${github.event.inputs.message}
-            echo ${message}
-            ./create-tag.sh -t ${{github.event.inputs.tagId}}
+            # export message=${github.event.inputs.message}
+            # echo ${message}
+            ./create-tag.sh -t ${{github.event.inputs.tagId}} -m ${{github.event.inputs.message}}
       - name: Run create-tag script when commit hash is provided
         if: ${{github.event.inputs.commit_hash != ''}} 
         run: |
             chmod +x ./create-tag.sh
-            export message=${{github.event.inputs.message}}
-            echo ${message}
-            ./create-tag.sh -c ${{github.event.inputs.commit_hash}} -t ${{github.event.inputs.tagId}} 
+            # export message=${{github.event.inputs.message}}
+            # echo ${message}
+            ./create-tag.sh -c ${{github.event.inputs.commit_hash}} -t ${{github.event.inputs.tagId}} -m ${{github.event.inputs.message}}
             
       - name: Run commands
         run: |
