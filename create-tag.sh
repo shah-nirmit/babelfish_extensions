@@ -24,6 +24,9 @@ do
     esac
 done
 
+echo ${new}
+echo ${commit}
+echo ${message}
 # get current commit hash for tag if not provided
 if [ -z "$commit" ]
 then
