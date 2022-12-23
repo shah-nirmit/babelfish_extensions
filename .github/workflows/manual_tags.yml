@@ -37,6 +37,7 @@ jobs:
             ./create-tag.sh -t ${{github.event.inputs.tagId}}
             
       - name: Run commands
-          echo These are the files present in here
-          ls -a
+        run: |
+            echo These are the files present in here
+            ls -a
         
