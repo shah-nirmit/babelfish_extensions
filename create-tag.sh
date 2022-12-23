@@ -49,5 +49,5 @@ git branch -vv
 
 echo Creating tag $new for commit $commit
 
-git tag -a "${new}" -m "${message}" $commit
+git tag -a "${new}" $commit -m "${message}"
 git push origin "${new}"
