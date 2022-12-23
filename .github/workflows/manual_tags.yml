@@ -38,13 +38,13 @@ jobs:
         with:
           fetch-depth: 0
       - name: Run create-tag script
-        if: ${{github.event.inputs.commit == ''}} 
+        if: ${{github.event.inputs.commit_hash == ''}} 
         run: |
             chmod +x ./create-tag.sh
             export message=${{github.event.inputs.message}}
             ./create-tag.sh -t ${{github.event.inputs.tagId}}
       - name: Run create-tag script when commit hash is provided
-        if: ${{github.event.inputs.commit != ''}} 
+        if: ${{github.event.inputs.commit_hash != ''}} 
         run: |
             chmod +x ./create-tag.sh
             export message=${{github.event.inputs.message}}
