@@ -31,6 +31,6 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Run create-tag script
-      - run: |
+        run: |
             bash ./create-tag.sh -t ${{github.event.inputs.tagId}}
         
