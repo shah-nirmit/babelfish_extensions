@@ -13,12 +13,12 @@ on:
         description: 'tag to create'
         # Input has to be provided for the workflow to run
         required: true
-      branch:
-        default: 'BABEL_2_X_DEV'
-        required: true
-        description: 'branch where to create the tag'
-      commit:
-        required: false
+#       branch:
+#         default: 'BABEL_2_X_DEV'
+#         required: true
+#         description: 'branch where to create the tag'
+#       commit:
+#         required: false
         
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -30,26 +30,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{github.event.inputs.branch}}
-          fetch-depth: 0
-      - name: testing
-        id: top-commit
-        if:  ${{github.event.inputs.commit == ''}} 
-        run: |
-          echo $GITHUB_SHA
-          git rev-parse HEAD
-          echo "TOP_COMMIT=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-      - uses: rickstaa/action-create-tag@v1
-        if: ${{github.event.inputs.commit != ''}} 
-        with:
-          tag: ${{github.event.inputs.tagId}}
-          commit_sha: ${{github.event.inputs.commit}}
-      - uses: rickstaa/action-create-tag@v1
-        if: ${{github.event.inputs.commit == ''}} 
-        with:
-          tag: ${{github.event.inputs.tagId}}
-          commit_sha: ${{steps.top-commit.outputs.TOP_COMMIT}}
+      - name: Run create-tag script
+      - run: |
+            bash ./create-tag.sh -t ${{github.event.inputs.tagId}}
         
