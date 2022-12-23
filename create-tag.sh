@@ -54,7 +54,7 @@ git remote set-url origin "${repo}"
 
 
 echo Creating tag $new for commit $commit
-git tag -a "${new}" -m ${{github.event.inputs.message}}
+git tag -a "${new}" -m ${message}
 git push origin "${new}"
 # POST a new ref to repo via Github API
 #curl -s -X POST https://api.github.com/repos/$REPO_OWNER/$repo/git/refs \
