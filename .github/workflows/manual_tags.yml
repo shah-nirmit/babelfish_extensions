@@ -14,9 +14,9 @@ on:
         required: true
       commit_hash:
         required: false
-#       branch:
-#         default: 'BABEL_2_X_DEV'
-#         required: true
+      branch:
+        default: 'BABEL_2_X_DEV'
+        required: true
 #         description: 'branch where to create the tag'
 
         
