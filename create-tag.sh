@@ -45,16 +45,17 @@ then
 fi
 
 # get repo name from git
-remote=$(git config --get remote.origin.url)
-repo=$(basename $remote.git)
+# remote=$(git config --get remote.origin.url)
+# repo=$(basename $remote.git)
 
 # Set up remote url for checkout@v1 action.
 
-echo ${remote}
-echo ${repo}
+# echo ${remote}
+# echo ${repo}
 
-git remote set-url origin "${repo}"
-
+# git remote set-url origin "${repo}"
+git remote -vv
+git branch -vv
 
 echo Creating tag $new for commit $commit
 git tag -a "${new}" -m ${message}
