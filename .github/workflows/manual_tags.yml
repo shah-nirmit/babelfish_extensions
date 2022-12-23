@@ -36,7 +36,7 @@ jobs:
       - name: Run create-tag script
         run: |
             chmod +x ./create-tag.sh
-            ./create-tag.sh -t ${{github.event.inputs.tagId}} -m ${{github.event.inputs.message}}
+            ./create-tag.sh -t ${{github.event.inputs.tagId}} 
             
       - name: Run commands
         run: |
