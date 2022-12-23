@@ -1,39 +1,34 @@
-# This is a basic workflow that is manually triggered
+name: Bump BabelFish Version Manual workflow
 
-name: Manual workflow
-
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
     inputs:
       commiter:
-        # Friendly description to be shown in the UI instead of 'name'
         description: 'Alias of the commiter'
-        # Default value if no value is explicitly provided
-        default: 'nirmisha'
-        # Input has to be provided for the workflow to run
         required: true
       target_branch:
         description: 'Branch Where to do version bump'
         default: 'BABEL_2_X_DEV'
         required: false
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
   Auto-Bump-Version:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env:
       EXT_BRANCH_URL: https://github.com/shah-nirmit/babelfish_extensions
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       vfile: contrib/babelfishpg_tsql/src/babelfish_version.h
     steps:
+        - name: Check if Action is being run from Fork
+          run: |
+            echo ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+            echo ${{ github.repository }}
+            echo ${{ github.event.pull_request.head.repo.full_name }}
         - name: Checkout the repo
           id: checkout-fork
           uses: actions/checkout@v3
+          with:
+            token: ${{ env.GITHUB_TOKEN }}
 
         - name: add the remote and setup tracking branch
           id: setup-tr-branch
@@ -43,6 +38,7 @@ jobs:
             git checkout -b bump-me  upstream/${{ github.event.inputs.target_branch}}
             git status
             git branch -vv
+
         - name: Identify the version to bump
           id: identify-versions
           run: |
@@ -68,7 +64,7 @@ jobs:
 
         - name: Raise a PR
           run: |
-            gh pr create --title "Bump Babelfish Version to ${{ env.bbf_new_version }}" --repo shah-nirmit/babelfish_extensions --base ${{ github.event.inputs.target_branch }} \
+            gh pr create --title "Bump Babelfish Version to ${{ env.bbf_new_version }}" --repo shah-nirmit/babelfish_extensions --base upstream/${{ github.event.inputs.target_branch }} \
                                                                                        --body "1.Bump Babelfish Version to ${{ env.bbf_new_version }}
                                                                                        2.Bump Babelfish Internal Version to ${{ env.bbf_int_new_version }}"
 
