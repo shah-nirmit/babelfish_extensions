@@ -22,9 +22,6 @@ do
     esac
 done
 
-echo ${new}
-echo ${commit}
-echo ${message}
 # get current commit hash for tag if not provided
 if [ -z "$commit" ]
 then
@@ -52,5 +49,5 @@ git branch -vv
 
 echo Creating tag $new for commit $commit
 
-git tag -a "${new}" -m "$message" $commit
+git tag -a "${new}" -m "$@$message" $commit
 git push origin "${new}"
