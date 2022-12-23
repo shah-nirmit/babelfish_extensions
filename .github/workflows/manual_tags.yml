@@ -32,5 +32,6 @@ jobs:
     steps:
       - name: Run create-tag script
         run: |
-            bash ./create-tag.sh -t ${{github.event.inputs.tagId}}
+            chmod +x ./create-tag.sh
+            ./create-tag.sh -t ${{github.event.inputs.tagId}}
         
