@@ -16,7 +16,7 @@ on:
         required: false
       branch:
         default: 'BABEL_2_X_DEV'
-        required: true
+        required: false
 #         description: 'branch where to create the tag'
 
         
