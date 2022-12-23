@@ -30,8 +30,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - uses: actions/checkout@v2
       - name: Run create-tag script
         run: |
             chmod +x ./create-tag.sh
             ./create-tag.sh -t ${{github.event.inputs.tagId}}
+            
+      - name: Run commands
+          echo These are the files present in here
+          ls -a
         
