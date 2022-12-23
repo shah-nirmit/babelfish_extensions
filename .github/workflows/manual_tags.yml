@@ -15,6 +15,8 @@ on:
         required: true
       message:
         required: true
+      commit_hash:
+        required: false
 #       branch:
 #         default: 'BABEL_2_X_DEV'
 #         required: true
@@ -33,11 +35,20 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Run create-tag script
+        if: ${{github.event.inputs.commit == ''}} 
         run: |
             chmod +x ./create-tag.sh
             export message=${{github.event.inputs.message}}
-            ./create-tag.sh -t ${{github.event.inputs.tagId}} 
+            ./create-tag.sh -t ${{github.event.inputs.tagId}}
+      - name: Run create-tag script when commit hash is provided
+        if: ${{github.event.inputs.commit != ''}} 
+        run: |
+            chmod +x ./create-tag.sh
+            export message=${{github.event.inputs.message}}
+            ./create-tag.sh -c ${{github.event.inputs.commit_hash}} -t ${{github.event.inputs.tagId}} 
             
       - name: Run commands
         run: |
