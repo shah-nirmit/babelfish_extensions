@@ -37,6 +37,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Check message
+        run: |
+            echo ${{github.event.inputs.message}}
       - name: Run create-tag script
         if: ${{github.event.inputs.commit_hash == ''}} 
         run: |
