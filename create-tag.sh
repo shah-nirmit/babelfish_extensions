@@ -9,8 +9,7 @@ git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 export usage="$(basename "$0") [-h] [-c commit] [-r repo][-m]\n
   -h    help\n
   -c    commit hash; Default commit:HEAD\n
-  -t    tag name\n
-  -m    message"
+  -t    tag name"
 
 
 while getopts hc:t:m flag
@@ -20,7 +19,6 @@ do
             exit;;
         c) commit=${OPTARG};;
         t) new=${OPTARG};;
-        m) message=${OPTARG};;
     esac
 done
 
@@ -52,7 +50,7 @@ fi
 git remote -vv
 git branch -vv
 
-echo Creating tag $new for commit $commit $message
+echo Creating tag $new for commit $commit
 
 git tag -a "${new}" -m "${message}" $commit
 git push origin "${new}"
