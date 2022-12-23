@@ -19,11 +19,6 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       vfile: contrib/babelfishpg_tsql/src/babelfish_version.h
     steps:
-        - name: Check if Action is being run from Fork
-          run: |
-            echo ${{ github.event.pull_request.head.repo.full_name == github.repository }}
-            echo ${{ github.repository }}
-            echo ${{ github.event.pull_request.head.repo.full_name }}
         - name: Checkout the repo
           id: checkout-fork
           uses: actions/checkout@v3
