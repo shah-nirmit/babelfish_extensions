@@ -8,22 +8,21 @@ on:
         required: true
       target_branch:
         description: 'Branch Where to do version bump'
-        default: 'BABEL_2_X_DEV'
-        required: false
+        required: true
 
 jobs:
   Auto-Bump-Version:
     runs-on: ubuntu-latest
     env:
       EXT_BRANCH_URL: https://github.com/shah-nirmit/babelfish_extensions
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.PAT }}
       vfile: contrib/babelfishpg_tsql/src/babelfish_version.h
     steps:
         - name: Checkout the repo
           id: checkout-fork
           uses: actions/checkout@v3
           with:
-            token: ${{ env.GITHUB_TOKEN }}
+            token: ${{ secrets.GITHUB_TOKEN }}
 
         - name: add the remote and setup tracking branch
           id: setup-tr-branch
