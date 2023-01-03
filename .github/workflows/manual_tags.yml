@@ -11,7 +11,7 @@ on:
         required: true
       # message for the tag
       message:
-        required: true
+        required: false
       # commit hash on top of which the tag will be created
       commit_hash:
         required: false
