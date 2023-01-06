@@ -36,8 +36,8 @@ then
 fi
 
 # check the tag format (need manual update when necessary)
-format=BABEL_[0-9]_[0-9]_[0-9]
-if ! [[ "$new" =~ "$format" ]]
+format=BABEL_
+if ! [[ "$new" =~ "$format"[0-9]_[0-9]_[0-9] ]]
 then
     echo "Error: Invalid tag prefix, expected: ${format}<number>"
     exit 1
