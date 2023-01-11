@@ -160,7 +160,7 @@ GEN_KEYWORDLIST_DEPS = $(TOOLSDIR)/gen_keywordlist.pl $(TOOLSDIR)/PerfectHash.pm
 TSQLSRC = .
 
 antlr/Makefile: antlr/CMakeLists.txt antlr/TSqlLexer.g4 antlr/TSqlLexer.g4
-	cd antlr && $(cmake) . && cd ..
+	cd antlr && $(cmake) -D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache . && cd ..
 
 .PHONY: antlr/libantlr_tsql.a  # to allow CMake's make check the build
 antlr/libantlr_tsql.a: antlr/Makefile
