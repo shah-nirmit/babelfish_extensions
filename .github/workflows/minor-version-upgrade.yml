@@ -19,13 +19,11 @@ jobs:
 
       - name: Restore ccache
         id: cache-compiler
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
           path: ~/.ccache
-          key: ccache-minorVU
-          restore-keys: |
-            ccache-minorVU
-            
+          key: ccache-Jumbo
+
       - name: Clone, build, and run tests for Postgres engine using ${{env.ENGINE_VER_FROM}}
         id: build-modified-postgres-older
         if: always() && steps.install-dependencies.outcome == 'success'

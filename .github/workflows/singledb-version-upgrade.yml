@@ -19,7 +19,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: ~/.ccache
-          key: ccache-MVU
+          key: ccache-Jumbo
 
       - name: Setup Base version ${{ env.ENGINE_BRANCH_FROM }} and run prepare tests
         id: setup-base-version

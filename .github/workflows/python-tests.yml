@@ -18,7 +18,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: ~/.ccache
-          key: ccache-jdbc
+          key: ccache-Jumbo
 
       - name: Build Modified Postgres
         id: build-modified-postgres

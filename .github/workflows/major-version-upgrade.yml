@@ -20,12 +20,10 @@ jobs:
         
       - name: Restore ccache
         id: cache-compiler
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
           path: ~/.ccache
-          key: ccache-MVU
-          restore-keys: |
-            ccache-MVU
+          key: ccache-Jumbo
 
       - name: Build Modified Postgres using ${{env.ENGINE_BRANCH_FROM}}
         id: build-modified-postgres-old

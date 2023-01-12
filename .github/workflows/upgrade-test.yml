@@ -47,12 +47,10 @@ jobs:
 
       - name: Restore ccache
         id: cache-compiler
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
           path: ~/.ccache
-          key: ccache-${{ steps.read-base-and-final-version.outputs.base-version }}-${{ steps.read-base-and-final-version.outputs.final-version }}
-          restore-keys: |
-            ccache-${{ steps.read-base-and-final-version.outputs.base-version }}-${{ steps.read-base-and-final-version.outputs.final-version }}
+          key: ccache-Jumbo
             
       - name: Find Engine and Extension Branches for Base Version ${{ steps.read-base-and-final-version.outputs.base-version }}
         id: find-branch
