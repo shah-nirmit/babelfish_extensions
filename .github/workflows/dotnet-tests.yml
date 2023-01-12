@@ -7,6 +7,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         id: checkout
+      
+      - name: Restore ccache
+        id: cache-compiler
+        uses: actions/cache/restore@v3
+        with:
+          path: ~/.ccache
+          keys: ccache-jdbc
 
       - name: Install Dependencies
         id: install-dependencies

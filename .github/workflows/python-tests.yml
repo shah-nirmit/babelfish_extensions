@@ -12,6 +12,13 @@ jobs:
         id: install-dependencies
         if: always()
         uses: ./.github/composite-actions/install-dependencies
+        
+      - name: Restore ccache
+        id: cache-compiler
+        uses: actions/cache/restore@v3
+        with:
+          path: ~/.ccache
+          keys: ccache-jdbc
 
       - name: Build Modified Postgres
         id: build-modified-postgres

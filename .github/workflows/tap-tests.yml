@@ -16,6 +16,13 @@ jobs:
         if: always()
         uses: ./.github/composite-actions/install-dependencies
 
+      - name: Restore ccache
+        id: cache-compiler
+        uses: actions/cache/restore@v3
+        with:
+          path: ~/.ccache
+          keys: ccache-jdbc
+
       - name: Install Tap Tests Dependencies
         id: install-tap-dependencies
         if: always() && steps.install-dependencies.outcome == 'success'

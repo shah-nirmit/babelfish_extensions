@@ -17,6 +17,15 @@ jobs:
         id: install-dependencies
         if: always()
         uses: ./.github/composite-actions/install-dependencies
+        
+      - name: Restore ccache
+        id: cache-compiler
+        uses: actions/cache@v3
+        with:
+          path: ~/.ccache
+          key: ccache-MVU
+          restore-keys: |
+            ccache-MVU
 
       - name: Build Modified Postgres using ${{env.ENGINE_BRANCH_FROM}}
         id: build-modified-postgres-old

@@ -13,6 +13,15 @@ jobs:
         if: always()
         uses: ./.github/composite-actions/install-dependencies
 
+      - name: Restore ccache
+        id: cache-compiler
+        uses: actions/cache@v3
+        with:
+          path: ~/.ccache
+          key: ccache-jdbc
+          restore-keys: |
+            ccache-jdbc
+            
       - name: Build Modified Postgres
         id: build-modified-postgres
         if: always() && steps.install-dependencies.outcome == 'success'

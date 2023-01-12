@@ -45,6 +45,15 @@ jobs:
             yq '."upgrade-version"[${{ matrix.upgrade-path.id }}][-1].version' ${{ github.workspace }}/.github/configuration/upgrade-test-configuration.yml
           )"
 
+      - name: Restore ccache
+        id: cache-compiler
+        uses: actions/cache@v3
+        with:
+          path: ~/.ccache
+          key: ccache-${{ steps.read-base-and-final-version.outputs.base-version }}-${{ steps.read-base-and-final-version.outputs.final-version }}
+          restore-keys: |
+            ccache-${{ steps.read-base-and-final-version.outputs.base-version }}-${{ steps.read-base-and-final-version.outputs.final-version }}
+            
       - name: Find Engine and Extension Branches for Base Version ${{ steps.read-base-and-final-version.outputs.base-version }}
         id: find-branch
         if: always() && steps.read-base-and-final-version.outcome == 'success'
