@@ -6,7 +6,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-        id: checkout
 
       - name: Install Dependencies
         id: install-dependencies
@@ -25,27 +24,53 @@ jobs:
       - name: Clone, build, and run tests for Postgres engine using ${{ inputs.engine_branch }}
         id: build-modified-postgres
         uses: ./.github/composite-actions/build-modified-postgres
-        if: always() && steps.install-dependencies.outcome == 'success'
         with:
           engine_branch: BABEL_1_2_STABLE__PG_13_6
           install_dir: psql13
 
       - name: Compile ANTLR
         id: compile-antlr
-        if: always() && steps.build-modified-postgres.outcome == 'success'
         uses: ./.github/composite-actions/compile-antlr
         with:
           install_dir: psql13
 
       - name: Set env variables and build extensions
-        if: always() && steps.compile-antlr.outcome == 'success'
         uses: ./.github/composite-actions/build-extensions
         with: 
           install_dir: psql13
           extension_branch: BABEL_1_2_STABLE
+      - name: Testing
+        run: |
+          ls -al ~
+          ls -al ~/psql13
+          rm -r psql13
+        shell: bash
+      
+      - uses: actions/checkout@v2
+
+      - name: Clone, build, and run tests for Postgres engine using ${{ inputs.engine_branch }}
+        id: build-modified-postgres-2
+        uses: ./.github/composite-actions/build-modified-postgres
+        with:
+          engine_branch: BABEL_1_5_STABLE__PG_13_9
+          install_dir: psql13
+
+      - name: Copy ANTLR
+        id: copy-antlr-1
+        run: cp "/usr/local/lib/libantlr4-runtime.so.4.9.3" ~/psql13/lib/
+        shell: bash
+
+      - name: Set env variables and build extensions
+        uses: ./.github/composite-actions/build-extensions
+        with: 
+          install_dir: psql13
+          extension_branch: BABEL_1_5_STABLE
+      
+      - uses: actions/checkout@v2
 
       - name: Testing
         run: |
           ls -al ~
           ls -al ~/psql13
+          ccache -s
         shell: bash
