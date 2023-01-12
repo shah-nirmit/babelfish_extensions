@@ -43,7 +43,7 @@ jobs:
         run: |
           ls -al ~
           ls -al ~/psql13
-          rm -r ~/psql13
+          sudo rm -r ~/psql13
           pwd
         shell: bash
       
