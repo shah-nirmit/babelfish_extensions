@@ -13,7 +13,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: ~/.ccache
-          keys: ccache-jdbc
+          key: ccache-jdbc
 
       - name: Install Dependencies
         id: install-dependencies
