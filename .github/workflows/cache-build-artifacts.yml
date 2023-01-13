@@ -7,11 +7,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install Dependencies
-        id: install-dependencies
-        if: always()
-        uses: ./.github/composite-actions/install-dependencies
-
       - name: Restore ccache
         id: cache-compiler
         uses: actions/cache@v3
@@ -21,9 +16,14 @@ jobs:
           restore-keys: |
             ccache-Jumbo
 
+      - name: Install Dependencies
+        id: install-dependencies
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
+        uses: ./.github/composite-actions/install-dependencies
+
       - name: Clone and build for Postgres engine using 13.6
         id: build-modified-postgres
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-modified-postgres
         with:
           engine_branch: BABEL_1_2_STABLE__PG_13_6
@@ -31,20 +31,20 @@ jobs:
 
       - name: Compile ANTLR
         id: compile-antlr
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/compile-antlr
         with:
           install_dir: psql13
 
       - name: Set env variables and build extensions
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-extensions
         with: 
           install_dir: psql13
           extension_branch: BABEL_1_2_STABLE
 
       - name: Testing
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: |
           ls -al ~
           ls -al ~/psql13
@@ -53,11 +53,11 @@ jobs:
         shell: bash
       
       - uses: actions/checkout@v2
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
 
       - name: Clone and build for Postgres engine using 13.9
         id: build-modified-postgres-2
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-modified-postgres
         with:
           engine_branch: BABEL_1_5_STABLE__PG_13_9
@@ -65,19 +65,19 @@ jobs:
 
       - name: Copy ANTLR
         id: copy-antlr-1
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: cp "/usr/local/lib/libantlr4-runtime.so.4.9.3" ~/psql13/lib/
         shell: bash
 
       - name: Set env variables and build extensions
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-extensions
         with: 
           install_dir: psql13
           extension_branch: BABEL_1_5_STABLE
 
       - name: Testing
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: |
           ls -al ~
           ls -al ~/psql13
@@ -86,11 +86,11 @@ jobs:
         shell: bash
       
       - uses: actions/checkout@v2
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
 
       - name: Clone and build for Postgres engine using 14.3
         id: build-modified-postgres-3
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-modified-postgres
         with:
           engine_branch: BABEL_2_1_STABLE__PG_14_3
@@ -98,19 +98,19 @@ jobs:
 
       - name: Copy ANTLR
         id: copy-antlr-2
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: cp "/usr/local/lib/libantlr4-runtime.so.4.9.3" ~/psql14/lib/
         shell: bash
 
       - name: Set env variables and build extensions
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-extensions
         with: 
           install_dir: psql14
           extension_branch: BABEL_2_1_STABLE
 
       - name: Testing
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: |
           ls -al ~
           ls -al ~/psql14
@@ -119,11 +119,11 @@ jobs:
         shell: bash
       
       - uses: actions/checkout@v2
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
 
       - name: Clone and build for Postgres engine using 14.5
         id: build-modified-postgres-4
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-modified-postgres
         with:
           engine_branch: BABEL_2_2_STABLE__PG_14_5
@@ -131,19 +131,19 @@ jobs:
 
       - name: Copy ANTLR
         id: copy-antlr-3
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: cp "/usr/local/lib/libantlr4-runtime.so.4.9.3" ~/psql14/lib/
         shell: bash
 
       - name: Set env variables and build extensions
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-extensions
         with: 
           install_dir: psql14
           extension_branch: BABEL_2_2_STABLE
 
       - name: Testing
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: |
           ls -al ~
           ls -al ~/psql14
@@ -152,11 +152,11 @@ jobs:
         shell: bash
       
       - uses: actions/checkout@v2
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
 
       - name: Clone and build for Postgres engine using 14.6
         id: build-modified-postgres-5
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-modified-postgres
         with:
           engine_branch: BABEL_2_3_STABLE__PG_14_6
@@ -164,19 +164,19 @@ jobs:
 
       - name: Copy ANTLR
         id: copy-antlr-4
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: cp "/usr/local/lib/libantlr4-runtime.so.4.9.3" ~/psql14/lib/
         shell: bash
 
       - name: Set env variables and build extensions
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-extensions
         with: 
           install_dir: psql14
           extension_branch: BABEL_2_3_STABLE
       
       - name: Testing
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: |
           ls -al ~
           ls -al ~/psql14
@@ -185,11 +185,11 @@ jobs:
         shell: bash
       
       - uses: actions/checkout@v2
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
 
       - name: Clone and build for Postgres engine using 14.X
         id: build-modified-postgres-6
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-modified-postgres
         with:
           engine_branch: BABEL_2_X_DEV__PG_14_X
@@ -197,19 +197,19 @@ jobs:
 
       - name: Copy ANTLR
         id: copy-antlr-5
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: cp "/usr/local/lib/libantlr4-runtime.so.4.9.3" ~/psql14/lib/
         shell: bash
 
       - name: Set env variables and build extensions
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-extensions
         with: 
           install_dir: psql14
           extension_branch: BABEL_2_X_DEV
       
       - name: Testing
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: |
           ls -al ~
           ls -al ~/psql14
@@ -218,11 +218,11 @@ jobs:
         shell: bash
       
       - uses: actions/checkout@v2
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
 
       - name: Clone and build for Postgres engine using 15.1
         id: build-modified-postgres-7
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-modified-postgres
         with:
           engine_branch: BABEL_3_0_STABLE__PG_15_1
@@ -230,19 +230,19 @@ jobs:
 
       - name: Copy ANTLR
         id: copy-antlr-6
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: cp "/usr/local/lib/libantlr4-runtime.so.4.9.3" ~/psql15/lib/
         shell: bash
 
       - name: Set env variables and build extensions
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-extensions
         with: 
           install_dir: psql15
           extension_branch: BABEL_3_0_STABLE
 
       - name: Testing
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: |
           ls -al ~
           ls -al ~/psql15
@@ -251,29 +251,29 @@ jobs:
         shell: bash
       
       - uses: actions/checkout@v2
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
 
       - name:  Clone and build for Postgres engine using 15.X
         id: build-modified-postgres-8
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-modified-postgres
       
       - name: Copy ANTLR
         id: copy-antlr-7
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: cp "/usr/local/lib/libantlr4-runtime.so.4.9.3" ~/psql/lib/
         shell: bash
       
       - name: Build Extensions
         id: build-extensions
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         uses: ./.github/composite-actions/build-extensions
 
       - uses: actions/checkout@v2
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
 
       - name: Testing
-        if: steps.cache-compiler.output.cache-hit != true
+        if: steps.cache-compiler.outputs.cache-hit != 'true'
         run: |
           ls -al ~
           ls -al ~/psql
