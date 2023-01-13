@@ -17,13 +17,6 @@ jobs:
         if: always()
         uses: ./.github/composite-actions/install-dependencies
 
-      - name: Restore ccache
-        id: cache-compiler
-        uses: actions/cache/restore@v3
-        with:
-          path: ~/.ccache
-          key: ccache-Jumbo
-
       - name: Clone, build, and run tests for Postgres engine using ${{env.ENGINE_VER_FROM}}
         id: build-modified-postgres-older
         if: always() && steps.install-dependencies.outcome == 'success'
